@@ -1,0 +1,20 @@
+{
+  "name": "My Streamlit App",
+  "short_name": "StreamlitApp",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#0a84ff",
+  "icons": [
+    {
+      "src": "/download (1).jpeg",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/download (1).jpeg",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
