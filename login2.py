@@ -2,12 +2,18 @@ import streamlit as st
 import importlib
 import os
 import sys
+from functools import lru_cache
 
-
-# Add the folder containing 'pages' to sys.path
+# Add root to Python path
 sys.path.append(os.path.dirname(__file__))
 
 st.set_page_config(page_title="Routing", layout="wide")
+
+# Cache imports so Streamlit reruns do not re-import them continuously
+@lru_cache(maxsize=None)
+def get_module(module_path: str):
+    return importlib.import_module(module_path)
+
 
 # ------------------------------------
 # AUTH STATE
@@ -62,9 +68,13 @@ def login_screen():
 # ------------------------------------
 # ROLE LOCK + PAGE LOADER
 # ------------------------------------
-def load_page(module_path):
-    module = importlib.import_module(module_path)
-    module.app()   # each page file contains:  def app(): ...
+def load_page(module_path: str):
+    module = get_module(module_path)
+    if hasattr(module, "app"):
+        module.app()
+    else:
+        st.error(f"Page '{module_path}' is missing app() function")
+
 
 
 # ------------------------------------
