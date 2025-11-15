@@ -22,7 +22,7 @@ if "role" not in st.session_state:
 ROLE_PAGES = {
     "admin": {
         "Admin Dashboard": "pages.admin.adminv2",
-        "Manage Admins": "pages.admin.analytics2",
+        #"Manage Admins": "pages.admin.analytics2",
         "Control Pannel": "pages.admin.control_panel2"
  
     },
