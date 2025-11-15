@@ -1,6 +1,11 @@
 import streamlit as st
 import importlib
 import os
+import sys
+
+
+# Add the folder containing 'pages' to sys.path
+sys.path.append(os.path.dirname(__file__))
 
 st.set_page_config(page_title="Routing", layout="wide")
 
