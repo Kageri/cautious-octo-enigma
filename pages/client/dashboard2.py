@@ -24,11 +24,10 @@ if "client" not in st.session_state:
 # -------------------------
 # DOGS: KEEP AS LIST, NOT DATAFRAME
 # -------------------------
-if "dogs" not in st.session_state:
-    st.session_state.dogs = [
-        {"name": "Buddy", "breed": "Labrador", "age": 4},
-        {"name": "Luna", "breed": "Husky", "age": 2},
-    ]
+st.session_state.dogs = [
+    {"name": "Buddy", "breed": "Golden Retriever", "age": 3},
+    {"name": "Luna", "breed": "Husky", "age": 2}
+]
 
 # -------------------------
 # EDIT CLIENT INFO
@@ -62,6 +61,7 @@ with st.form("add_dog_form"):
         # append to the list, NOT a DataFrame
         st.session_state.dogs.append({"name": dog_name, "breed": breed, "age": age})
         st.success(f"Added {dog_name}!")
+        
 
 # -------------------------
 # EDIT EXISTING DOGS
