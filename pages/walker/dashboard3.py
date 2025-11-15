@@ -3,6 +3,10 @@ import pandas as pd
 from datetime import datetime
 import calendar
 
+def app():
+    st.title("Walker's Dashboard")
+    st.write("All information pertaining to the walker.")
+    
 st.set_page_config(page_title="Walker Dashboard", layout="wide")
 st.title("Walker Dashboard — Schedule, Walk Details & Actions")
 
