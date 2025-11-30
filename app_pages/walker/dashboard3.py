@@ -40,7 +40,7 @@ def app():
             {"walker": "Alice Walker", "dog": "Max", "owner": "Anna Brown", "owner_phone": "555-4444", "datetime": "2025-11-17 11:00", "notes": ""},
         ]
 
-    # Filter schedule for the logged-in walker
+    # Filter schedule
     walker_events = [
         event for event in st.session_state.walk_schedule
         if event["walker"] == walker_name
@@ -51,7 +51,7 @@ def app():
     schedule_df["Time"] = schedule_df["datetime"].dt.strftime("%I:%M %p")
 
     # ---------------------------------------------------
-    # BUILD FULLCALENDAR EVENTS
+    # BUILD FULLCALENDAR EVENTS (Correct format)
     # ---------------------------------------------------
     fc_events = []
     for _, row in schedule_df.iterrows():
@@ -64,6 +64,7 @@ def app():
                 "owner": row["owner"],
                 "owner_phone": row["owner_phone"],
                 "notes": row["notes"],
+                "time": row["Time"],
             }
         })
 
@@ -77,7 +78,7 @@ def app():
         "height": 700,
         "events": fc_events,
         "eventClick": {
-            "callback": "function(info) { return info.event; }",
+            "callback": "function(info) { return info.event.toPlainObject(); }",
             "name": "selected_event",
         },
         "headerToolbar": {
@@ -90,11 +91,19 @@ def app():
     event_result = calendar(calendar_options)
 
     # ---------------------------------------------------
-    # WHEN USER CLICKS A WALK EVENT
+    # WHEN USER CLICKS AN EVENT (Consistent and safe)
     # ---------------------------------------------------
+    ev = None
+
     if event_result and "selected_event" in event_result:
         ev = event_result["selected_event"]
+        st.session_state.selected_walk = ev  # persistent selection
 
+    elif "selected_walk" in st.session_state:
+        ev = st.session_state.selected_walk
+
+    # Render only if an event is selected
+    if ev:
         dog = ev["extendedProps"]["dog"]
         owner = ev["extendedProps"]["owner"]
         owner_phone = ev["extendedProps"]["owner_phone"]
@@ -104,7 +113,9 @@ def app():
         st.markdown("---")
         st.subheader(f"Walk Details — {dog}")
 
-        # CARD UI
+        # -------------------------
+        # CARD UI (guaranteed to show)
+        # -------------------------
         st.markdown(
             f"""
             <div style="
@@ -112,9 +123,9 @@ def app():
                 border-radius: 10px;
                 padding: 15px;
                 margin: 10px 0;
-                background-color: #f9f9f9;
-                box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-                width: 350px;
+                background-color: #ffffff;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+                width: 380px;
             ">
                 <h4 style='margin-bottom:10px;'>Walk Details</h4>
                 <p><b>Dog:</b> {dog}</p>
@@ -131,7 +142,6 @@ def app():
         # ---------------------------------------------------
         st.subheader("Actions")
 
-        # Upload Video
         uploaded_video = st.file_uploader(
             f"Upload walk video for {dog}", 
             type=["mp4", "mov", "avi"]
@@ -140,7 +150,6 @@ def app():
         if uploaded_video:
             st.success(f"Uploaded: {uploaded_video.name}")
 
-        # Call / Text Owner
         col1, col2 = st.columns(2)
 
         with col1:
