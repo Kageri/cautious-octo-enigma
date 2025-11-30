@@ -3,6 +3,13 @@ import pandas as pd
 from datetime import datetime
 from streamlit_calendar import calendar
 
+import sys, os
+
+BASE = os.path.dirname(os.path.abspath(__file__))
+if BASE not in sys.path:
+    sys.path.insert(0, BASE)
+
+
 # ---------------------------------------------------
 # MAIN WALKER APP
 # ---------------------------------------------------
