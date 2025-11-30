@@ -10,9 +10,9 @@ sys.path.append(os.path.dirname(__file__))
 st.set_page_config(page_title="Routing", layout="wide")
 
 # Cache imports so Streamlit reruns do not re-import them continuously
-@lru_cache(maxsize=None)
 def get_module(module_path: str):
-    return importlib.import_module(module_path)
+    return importlib.reload(importlib.import_module(module_path))
+
 
 
 # ------------------------------------
