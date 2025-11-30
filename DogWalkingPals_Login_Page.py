@@ -27,17 +27,17 @@ if "role" not in st.session_state:
 # ------------------------------------
 ROLE_PAGES = {
     "admin": {
-        "Admin Dashboard": "pages.admin.adminv2",
+        "Admin Dashboard": "app_pages.admin.adminv2",
         #"Manage Admins": "pages.admin.analytics2",
-        "Control Pannel": "pages.admin.control_panel2"
+        "Control Pannel": "app_pages.admin.control_panel2"
  
     },
     "client": {
-        "Client Dashboard": "pages.client.dashboard2",
-        "Schedule": "pages.client.calendar",
+        "Client Dashboard": "app_pages.client.dashboard2",
+        "Schedule": "app_pages.client.calendar",
     },
     "walker": {
-        "My Schedule": "pages.walker.dashboard3",
+        "My Schedule": "app_pages.walker.dashboard3",
     },
 }
 
